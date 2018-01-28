@@ -33,4 +33,4 @@ def recognize(filename):
 
 
 if __name__ == '__main__':
-    sys.exit(app.run(debug=True))
+    sys.exit(app.run(host='0.0.0.0', debug=True))
