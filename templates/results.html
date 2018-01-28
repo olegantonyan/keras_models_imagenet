@@ -3,5 +3,22 @@
 {% block title %}Results{% endblock %}
 
 {% block content %}
-{{ data }}
+
+<div>
+  <img src="{{ image }}" alt="Original image" width="500">
+</div>
+
+<div>
+  <ol>
+    {% for i in data %}
+      <li>{{ i[1] }} ({{ i[2] }})</li>
+    {% endfor %}
+  </ol>
+</div>
+
+<div>
+  <a href="/">Back</a>
+</div>
+
+
 {% endblock %}
