@@ -1,30 +1,29 @@
-import quart
+import flask
 import sys
 import tempfile
 import os
 
 import models.resnet50
 
-app = quart.Quart(__name__)
+app = flask.Flask(__name__)
 
 
 @app.route('/', methods=['GET', 'POST'])
-async def index():
-    if quart.request.method == 'POST':
-        files = await quart.request.files
-        f = files['file']
+def index():
+    if flask.request.method == 'POST':
+        f = flask.request.files['file']
         upl = tempfile.NamedTemporaryFile(delete=False)
         upl.write(f.read())
-        return await quart.render_template('results.html', data=recognize(upl.name), image=quart.url_for('images', image=os.path.basename(upl.name)))
+        return flask.render_template('results.html', data=recognize(upl.name), image=flask.url_for('images', image=os.path.basename(upl.name)))
     else:
-        return await quart.render_template('index.html')
+        return flask.render_template('index.html')
 
 
 @app.route('/images/<image>', methods=['GET'])
-async def images(image):
+def images(image):
     file_dir = tempfile.gettempdir()
     try:
-        return await quart.send_from_directory(file_dir, image)
+        return flask.send_from_directory(file_dir, image)
     finally:
         os.remove(os.path.join(file_dir, image))
 
