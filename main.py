@@ -12,9 +12,8 @@ app = quart.Quart(__name__)
 async def index():
     if quart.request.method == 'POST':
         files = await quart.request.files
-        f = files['file']
         upl = tempfile.NamedTemporaryFile(delete=False)
-        upl.write(f.read())
+        upl.write(files['file'].read())
         return await quart.render_template('results.html', data=recognize(upl.name), image=quart.url_for('images', image=os.path.basename(upl.name)))
     else:
         return await quart.render_template('index.html')
@@ -34,4 +33,4 @@ def recognize(filename):
 
 
 if __name__ == '__main__':
-    sys.exit(app.run(host='0.0.0.0', debug=True))
+    sys.exit(app.run(host='0.0.0.0'))
