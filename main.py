@@ -3,7 +3,7 @@ import sys
 import tempfile
 import os
 
-from models import *
+import models.resnet50
 
 app = flask.Flask(__name__)
 app.secret_key = 'fj3bklLKknb786hJHf'
@@ -48,7 +48,7 @@ def allowed_file(filename):
 
 
 def recognize(filename):
-    return resnet50.run(filename)
+    return models.resnet50.run(filename)
 
 
 if __name__ == '__main__':
